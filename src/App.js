@@ -35,9 +35,9 @@ function App() {
     >
       <Routes>
         <Route path="/" element={<AppBar />}>
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/users" element={<UsersPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="users" element={<UsersPage />} />
           <Route index element={<HomePage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
