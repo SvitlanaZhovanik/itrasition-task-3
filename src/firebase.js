@@ -1,14 +1,14 @@
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  apiKey: "AIzaSyAjl4zOwf0QR6y29YEWyZv-KzkKvJ4AqdU",
+  authDomain: "auth-itransition.firebaseapp.com",
   databaseURL:
     "https://auth-itransition-default-rtdb.europe-west1.firebasedatabase.app",
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  projectId: "auth-itransition",
+  storageBucket: "auth-itransition.appspot.com",
+  messagingSenderId: "637321004800",
+  appId: "1:637321004800:web:50824db753ee97b25755e5",
 };
 
 export const app = initializeApp(firebaseConfig);
