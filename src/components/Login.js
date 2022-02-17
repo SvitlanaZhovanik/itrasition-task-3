@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import FormComponent from "./Form";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../redux/userSlice";
+import FormComponent from "./Form";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,17 @@ const Login = () => {
         );
         navigate("/");
       })
-      .catch(console.error);
+      .catch((error) => {
+        toast.error(`${error.message}`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
   };
   return (
     <FormComponent

@@ -4,21 +4,11 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import FormComponent from "./Form";
 import { setUser } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
-import { getDatabase, ref, set } from "firebase/database";
-
-function writeUserData(userId, email, name, createProfile, lastLogin) {
-  const db = getDatabase();
-  set(ref(db, "users/" + userId), {
-    email: email,
-    block: false,
-    name: name,
-    createProfile,
-    lastLogin,
-  });
-}
+import { writeUserData } from "../firebaseAPI";
+import { toast } from "react-toastify";
+import FormComponent from "./Form";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -53,11 +43,21 @@ const Register = () => {
           navigate("/");
         }
       })
-      .catch(console.error);
+      .catch((error) => {
+        toast.error(`${error.message}`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
   };
   return (
     <FormComponent
-      title="register"
+      title="Register"
       handleClick={handleRegister}
       isRegister={true}
     />
