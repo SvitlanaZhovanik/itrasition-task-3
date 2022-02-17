@@ -24,7 +24,7 @@ function App() {
     <Suspense
       fallback={
         <CircleLoader
-          color={"#d910e0"}
+          color={"#0d6efd"}
           css={css`
             margin: 30% 45%;
             display: block;
