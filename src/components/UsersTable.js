@@ -41,7 +41,6 @@ const UsersTable = () => {
     });
   }, []);
 
-  console.log(checkboxes);
   return (
     <Form className="mt-4">
       <Table striped bordered responsive hover variant="dark">
