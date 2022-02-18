@@ -4,25 +4,21 @@ import { getUsers } from "../firebaseAPI";
 
 const UsersTable = () => {
   const [users, setUsers] = useState({});
-  const [checkboxes, setCheckboxes] = useState([]);
+  const [checkboxes, setCheckboxes] = useState(setAllCheckbox());
 
-  useEffect(() => {
-    setAllCheckbox();
-  }, []);
-
-  const setAllCheckbox = () => {
+  function setAllCheckbox() {
     const list = document.querySelectorAll('input[name = "user"]');
     const arr = [];
-    list.forEach((item, idx) => {
+    list.forEach((item) => {
       const newItem = {
-        id: idx,
+        id: item.id,
         value: item.value,
         checked: item.checked,
       };
       arr.push(newItem);
     });
-    setCheckboxes(arr);
-  };
+    return arr;
+  }
 
   const allChecked = checkboxes.every(({ checked }) => checked);
 
