@@ -4,6 +4,49 @@ import { getUsers } from "../firebaseAPI";
 
 const UsersTable = () => {
   const [users, setUsers] = useState({});
+  const [checkboxes, setCheckboxes] = useState([]);
+
+  useEffect(() => {
+    setAllCheckbox();
+  }, []);
+
+  const setAllCheckbox = () => {
+    const list = document.querySelectorAll('input[name = "user"]');
+    const arr = [];
+    list.forEach((item, idx) => {
+      const newItem = {
+        id: idx,
+        value: item.value,
+        checked: item.checked,
+      };
+      arr.push(newItem);
+    });
+    setCheckboxes(arr);
+  };
+
+  const allChecked = checkboxes.every(({ checked }) => checked);
+
+  const checkAll = () => {
+    setCheckboxes((checkboxes) => {
+      return checkboxes.map((checkbox) => ({
+        ...checkbox,
+        checked: !allChecked,
+      }));
+    });
+  };
+  const checkCur = (idx) => {
+    setCheckboxes((checkboxes) => {
+      return checkboxes.map((checkbox, index) => {
+        if (index === idx) {
+          return {
+            ...checkbox,
+            checked: !checkbox.checked,
+          };
+        }
+        return checkbox;
+      });
+    });
+  };
 
   useEffect(() => {
     getUsers().then((items) => {
@@ -17,7 +60,12 @@ const UsersTable = () => {
         <thead>
           <tr>
             <th>
-              <Form.Check type="checkbox" id="1" label="All check" />
+              <Form.Check
+                type="checkbox"
+                label="All check"
+                checked={allChecked}
+                onChange={checkAll}
+              />
             </th>
             <th>id</th>
             <th>Name</th>
@@ -28,17 +76,19 @@ const UsersTable = () => {
           </tr>
         </thead>
         <tbody>
-          {Object.keys(users).map((user) => {
+          {Object.keys(users).map((user, idx) => {
             const userValue = users[user];
             return (
               <tr key={user}>
                 <td>
                   <Form.Check
                     type="checkbox"
-                    name={user}
-                    value={false}
-                    id="1"
+                    name="user"
+                    value={user}
+                    checked={checkboxes[idx]?.checked}
+                    id={idx}
                     aria-label="Check item"
+                    onChange={() => checkCur(idx)}
                   />
                 </td>
                 <td>{user}</td>
