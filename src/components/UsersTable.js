@@ -4,21 +4,7 @@ import { getUsers } from "../firebaseAPI";
 
 const UsersTable = () => {
   const [users, setUsers] = useState({});
-  const [checkboxes, setCheckboxes] = useState(setAllCheckbox());
-
-  function setAllCheckbox() {
-    const list = document.querySelectorAll('input[name = "user"]');
-    const arr = [];
-    list.forEach((item) => {
-      const newItem = {
-        id: item.id,
-        value: item.value,
-        checked: item.checked,
-      };
-      arr.push(newItem);
-    });
-    return arr;
-  }
+  const [checkboxes, setCheckboxes] = useState([]);
 
   const allChecked = checkboxes.every(({ checked }) => checked);
 
@@ -46,10 +32,16 @@ const UsersTable = () => {
 
   useEffect(() => {
     getUsers().then((items) => {
+      setCheckboxes(
+        Object.keys(items.val()).map((item, idx) => {
+          return { id: idx, value: item, checked: false };
+        }),
+      );
       return setUsers(items.val());
     });
   }, []);
 
+  console.log(checkboxes);
   return (
     <Form className="mt-4">
       <Table striped bordered responsive hover variant="dark">
