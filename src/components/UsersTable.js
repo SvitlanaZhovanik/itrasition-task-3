@@ -1,46 +1,12 @@
-import { useEffect, useState } from "react";
 import { Form, Table } from "react-bootstrap";
-import { getUsers } from "../firebaseAPI";
 
-const UsersTable = () => {
-  const [users, setUsers] = useState({});
-  const [checkboxes, setCheckboxes] = useState([]);
-
-  const allChecked = checkboxes.every(({ checked }) => checked);
-
-  const checkAll = () => {
-    setCheckboxes((checkboxes) => {
-      return checkboxes.map((checkbox) => ({
-        ...checkbox,
-        checked: !allChecked,
-      }));
-    });
-  };
-  const checkCur = (idx) => {
-    setCheckboxes((checkboxes) => {
-      return checkboxes.map((checkbox, index) => {
-        if (index === idx) {
-          return {
-            ...checkbox,
-            checked: !checkbox.checked,
-          };
-        }
-        return checkbox;
-      });
-    });
-  };
-
-  useEffect(() => {
-    getUsers().then((items) => {
-      setCheckboxes(
-        Object.keys(items.val()).map((item, idx) => {
-          return { id: idx, value: item, checked: false };
-        }),
-      );
-      return setUsers(items.val());
-    });
-  }, []);
-
+const UsersTable = ({
+  users,
+  checkboxes,
+  onChangeCheck,
+  checkAll,
+  allChecked,
+}) => {
   return (
     <Form className="mt-4">
       <Table striped bordered responsive hover variant="dark">
@@ -75,7 +41,7 @@ const UsersTable = () => {
                     checked={checkboxes[idx]?.checked}
                     id={idx}
                     aria-label="Check item"
-                    onChange={() => checkCur(idx)}
+                    onChange={() => onChangeCheck(idx)}
                   />
                 </td>
                 <td>{user}</td>

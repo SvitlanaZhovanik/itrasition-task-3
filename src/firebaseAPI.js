@@ -1,4 +1,4 @@
-import { getDatabase, ref, get, set } from "firebase/database";
+import { getDatabase, ref, get, set, remove } from "firebase/database";
 
 const db = getDatabase();
 
@@ -15,4 +15,8 @@ export function writeUserData(userId, email, name, createProfile, lastLogin) {
     createProfile,
     lastLogin: new Date(lastLogin),
   });
+}
+
+export function deleteUserData(id) {
+  remove(ref(db, "users/" + id));
 }
