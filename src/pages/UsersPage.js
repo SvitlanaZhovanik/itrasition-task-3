@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 import { useAuth } from "../hooks/use-auth";
-import { getAuth } from "firebase/auth";
+import { getAuth, deleteUser } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Toolbar from "../components/Toolbar";
 import UsersTable from "../components/UsersTable";
@@ -62,6 +62,7 @@ export default function UsersPage() {
       const auth = getAuth();
       if (checkbox.value === auth.currentUser.uid) {
         dispatch(removeUser());
+        deleteUser(auth.currentUser);
       }
     });
     getUsers().then((items) => {
